@@ -19,7 +19,6 @@ const Dashboard = () => {
         );
         setAppointments(data.appointments || []);
       } catch (error) {
-        console.error("Error fetching appointments:", error);
         setAppointments([]);
         toast.error("Failed to fetch appointments.");
       }

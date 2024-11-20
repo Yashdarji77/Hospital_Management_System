@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 const Messages = () => {
   const [messages, setMessages] = useState([]);
   const { isAuthenticated } = useContext(Context);
+
   useEffect(() => {
     const fetchMessages = async () => {
       try {
@@ -15,7 +16,13 @@ const Messages = () => {
         );
         setMessages(data.messages);
       } catch (error) {
-        console.log(error.response.data.message);
+        if (error.response) {
+          toast.error(`Error: ${error.response.data.message}`);
+        } else if (error.request) {
+          toast.error("No response from the server. Please try again later.");
+        } else {
+          toast.error("Error occurred while fetching messages.");
+        }
       }
     };
     fetchMessages();
